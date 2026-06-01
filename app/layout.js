@@ -20,6 +20,11 @@ const dmSans = DM_Sans({
   variable: "--font-sans",
 });
 
+export const metadata = {
+  title: "Prept - Ace your next interview",
+  description: "Book 1:1 mock interviews with senior engineers and get AI-powered feedback.",
+};
+
 
 export default function RootLayout({ children }) {
   return (

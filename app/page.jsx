@@ -13,8 +13,8 @@ import Link from "next/link";
 import { CodeDemo } from "@/components/AnimateCode";
 import { StarsBackgroundDemo } from "@/components/StarsBackGround";
 import { BentoCard } from "@/components/BentoCard";
+import CustomPricingTable from "@/components/CustomPricingTable";
 import { PricingTable } from "@clerk/nextjs";
-import PricingSection from "@/components/PricingSection";
 
 
 function MockUI({ rows = 3 }) {
@@ -216,7 +216,7 @@ export default function Home() {
           </div>
         </div>
 
-        <PricingSection className="mt-10" />
+        <PricingTable />
       </section>
       {/* CTA */}
       <section className="relative z-10 pb-28 max-w-5xl mx-auto px-6">

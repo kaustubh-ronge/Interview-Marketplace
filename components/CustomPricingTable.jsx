@@ -6,7 +6,7 @@ import { SignInButton } from "@clerk/nextjs";
 import { Button } from "@/components/ui/button";
 import { PLANS } from "@/lib/data";
 
-export default function PricingSection() {
+export default function CustomPricingTable() {
   const { has, userId } = useAuth();
 
   const isSignedIn = !!userId;
@@ -17,24 +17,23 @@ export default function PricingSection() {
   const activePlanSlug = isOnPro
     ? "pro"
     : isOnStarter
-    ? "starter"
-    : isOnFree
-    ? "free"
-    : null;
+      ? "starter"
+      : isOnFree
+        ? "free"
+        : null;
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mt-10">
       {PLANS.map((plan) => {
         const isActive = activePlanSlug === plan.slug;
 
         return (
           <div
             key={plan.name}
-            className={`relative rounded-2xl p-10 h-full flex flex-col transition-all duration-300 hover:-translate-y-1 ${
-              plan.featured
+            className={`relative rounded-2xl p-10 h-full flex flex-col transition-all duration-300 hover:-translate-y-1 ${plan.featured
                 ? "bg-[#141417] border border-amber-400/20"
                 : "bg-[#0f0f11] border border-white/10 hover:border-amber-400/10"
-            } ${isActive ? "ring-1 ring-amber-400/30" : ""}`}
+              } ${isActive ? "ring-1 ring-amber-400/30" : ""}`}
           >
             {/* Most Popular badge */}
             {plan.featured && !isActive && (
@@ -49,11 +48,10 @@ export default function PricingSection() {
 
             <div className="flex items-end gap-1 mb-1.5">
               <span
-                className={`font-serif text-5xl leading-none tracking-tight ${
-                  plan.featured
+                className={`font-serif text-5xl leading-none tracking-tight ${plan.featured
                     ? "bg-linear-to-br from-amber-300 to-amber-500 bg-clip-text text-transparent"
                     : "bg-linear-to-br from-stone-100 to-stone-400 bg-clip-text text-transparent"
-                }`}
+                  }`}
               >
                 {plan.price}
               </span>
@@ -126,8 +124,8 @@ export default function PricingSection() {
                   {activePlanSlug === "pro" && plan.slug === "starter"
                     ? "Downgrade"
                     : activePlanSlug === "starter" && plan.slug === "pro"
-                    ? "Upgrade →"
-                    : "Get started →"}
+                      ? "Upgrade →"
+                      : "Get started →"}
                 </Button>
               </CheckoutButton>
             ) : (

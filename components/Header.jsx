@@ -4,6 +4,8 @@ import { Show, SignInButton, SignUpButton, UserButton } from '@clerk/nextjs'
 import Image from 'next/image'
 import Link from 'next/link'
 import { checkUser } from '@/lib/checkUser'
+import { CalendarDays, Users } from 'lucide-react'
+import CreditButton from './CreditButton'
 
 const Header = async () => {
     const user = await checkUser();
@@ -20,9 +22,6 @@ const Header = async () => {
                 />
             </Link>
 
-            {/* Redirection Logic  */}
-
-
             {/* sign in  */}
             <div className="flex items-center gap-3">
                 <Show when="signed-out">
@@ -35,6 +34,40 @@ const Header = async () => {
                     </SignUpButton>
                 </Show>
                 <Show when="signed-in">
+
+                    {/* Links  */}
+                    {user?.role === "INTERVIEWER" && (
+                        <Button variant='ghost' asChild>
+                            <Link href={'/dashboard'}>Dashboard</Link>
+                        </Button>
+                    )}
+
+                    {user?.role === "INTERVIEWEE" && (
+                        <>
+                            <Button variant='ghost' asChild>
+                                <Link href={'/explore'}>
+                                    <Users size={16} />
+                                </Link>
+                            </Button>
+                            <Button variant='default' asChild>
+                                <Link href={'/appointments'}>
+                                    <CalendarDays size={16} />
+                                    <span className='hidden md:inline'>My Appointments</span>
+                                </Link>
+                            </Button>
+                        </>
+                    )}
+
+                    <CreditButton
+                        role={user?.role === "INTERVIEWER" ? "INTERVIEWER" : "INTERVIEWEE"}
+                        credits={
+                            (user?.role === "INTERVIEWER"
+                                ? user?.creditBalance
+                                : user?.credits
+                            ) ?? 0
+                        }
+                    />
+
                     <UserButton />
                 </Show>
             </div>
